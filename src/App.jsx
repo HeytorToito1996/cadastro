@@ -7,10 +7,34 @@ function App() {
     const [senha,setSenha] = useState("");
 
     
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
       event.preventDefault();
 
-      alert("Cadastro Realizado");
+      const dados = {
+        usuario,
+        email,
+        senha
+      }
+
+      try {
+        const resposta = await fetch("http://localhost:3000/api/",{
+            method:"POST",
+            headers:{
+              "Content-Type":"application/json",
+            },
+            body:JSON.stringfy(dados),
+        });
+        const resultado = await resposta.json();
+        alert('Cadastro Realizado com Sucesso');
+
+        setUsuario("");
+        setEmail("");
+        setSenha("");
+      } catch (error) {
+        alert("erro ao cadastrar");   
+      }
+
+      
     }
 
     return(
